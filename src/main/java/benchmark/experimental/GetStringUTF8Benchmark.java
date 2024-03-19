@@ -86,27 +86,7 @@ public class GetStringUTF8Benchmark {
     }
 
     public static String getUtf8String(MemorySegment segment) {
-        long length = segment.byteSize();
-        if (segment.address() % SPECIES_LENGTH != 0) { // For simplicity, do not handle these situations
-            return segment.getUtf8String(0);
-        }
-
-        int len = strlen(segment, (int) Long.min(length, Integer.MAX_VALUE));
-        boolean ascii = true;
-
-        if (len == 0) {
-            return "";
-        }
-
-        if (len < 0) {
-            len = -len;
-            ascii = false;
-        }
-
-
-        byte[] bytes = new byte[len];
-        MemorySegment.copy(segment, ValueLayout.JAVA_BYTE, 0, bytes, 0, len);
-        return ascii ? newAsciiString(bytes) : new String(bytes, StandardCharsets.UTF_8);
+        return segment.getString(0L);
     }
 
     private static MemorySegment allocateAlignmentString(Arena arena, String str) {
@@ -114,7 +94,7 @@ public class GetStringUTF8Benchmark {
 
         MemorySegment heapSegment = MemorySegment.ofArray(bytes);
         MemorySegment res = arena.allocate(MemoryLayout.sequenceLayout(bytes.length + 1, ValueLayout.JAVA_BYTE)
-                .withBitAlignment((long) SPECIES_LENGTH * Byte.SIZE));
+                .withByteAlignment((long) SPECIES_LENGTH));
 
         if (res.address() % SPECIES_LENGTH != 0) {
             throw new AssertionError();
@@ -163,7 +143,7 @@ public class GetStringUTF8Benchmark {
 
     //@Benchmark
     public String panama() {
-        return segment.getUtf8String(0);
+        return getUtf8String(segment);
     }
 
     //@Benchmark
