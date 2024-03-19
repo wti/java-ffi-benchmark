@@ -58,9 +58,13 @@ public class Helper {
             throw new AssertionError(e);
         }
     }
-
-    private static final Linker.Option[] TRIVIAL = {Linker.Option.isTrivial()};
-    private static final Linker.Option[] NOT_TRIVIAL = {};
+    // TODO: Uncertain about naming. Current interpretation:
+    // Trivial meant the call will not do anything risking thread blocking, etc.
+    // If so, then it is ok to be a critical section, 
+    // with region pinning permitting GC during such sessions.
+    // Source: https://bugs.openjdk.org/browse/JDK-8312523
+    private static final Linker.Option[] TRIVIAL = {Linker.Option.critical(true)};
+    private static final Linker.Option[] NOT_TRIVIAL = {Linker.Option.critical(false)};
 
     static MethodHandle downcallHandle(String name, FunctionDescriptor fd, boolean trivial) {
         MemorySegment address = SymbolLookup.loaderLookup()
