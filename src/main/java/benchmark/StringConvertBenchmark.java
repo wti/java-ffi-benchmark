@@ -85,14 +85,14 @@ public class StringConvertBenchmark {
     @Benchmark
     public void passStringToNativePanama() throws Throwable {
         try (Arena arena = Arena.ofConfined()) {
-            acceptString.invokeExact(arena.allocateUtf8String(testString));
+            acceptString.invokeExact(arena.allocateFrom(testString));
         }
     }
 
     @Benchmark
     public void passStringToNativePanamaTrivial() throws Throwable {
         try (Arena arena = Arena.ofConfined()) {
-            acceptStringTrivial.invokeExact(arena.allocateUtf8String(testString));
+            acceptStringTrivial.invokeExact(arena.allocateFrom(testString));
         }
     }
 
@@ -123,12 +123,12 @@ public class StringConvertBenchmark {
 
     @Benchmark
     public String getStringFromNativePanama() throws Throwable {
-        return ((MemorySegment) getString.invokeExact(length)).reinterpret(Long.MAX_VALUE).getUtf8String(0);
+        return ((MemorySegment) getString.invokeExact(length)).reinterpret(Long.MAX_VALUE).getString(0L);
     }
 
     @Benchmark
     public String getStringFromNativePanamaTrivial() throws Throwable {
-        return ((MemorySegment) getStringTrivial.invokeExact(length)).reinterpret(Long.MAX_VALUE).getUtf8String(0);
+        return ((MemorySegment) getStringTrivial.invokeExact(length)).reinterpret(Long.MAX_VALUE).getString(0L);
     }
 
     @Benchmark
