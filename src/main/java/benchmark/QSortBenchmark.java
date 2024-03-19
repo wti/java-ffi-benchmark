@@ -97,7 +97,7 @@ public class QSortBenchmark {
     public void setup() {
         benchmarkArena = Arena.ofConfined();
 
-        segment = benchmarkArena.allocateArray(JAVA_INT, length);
+        segment = benchmarkArena.allocate(JAVA_INT, length);
         for (int i = 0; i < length; i++) {
             segment.set(JAVA_INT, i * 4L, i);
         }
