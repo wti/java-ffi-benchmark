@@ -23,9 +23,9 @@ public class SysinfoBenchmark {
             ValueLayout.JAVA_LONG.withName("bufferram"),
             ValueLayout.JAVA_LONG.withName("totalswap"),
             ValueLayout.JAVA_LONG.withName("freeswap"),
-            ValueLayout.JAVA_SHORT.withName("procs").withBitAlignment(64),
+            ValueLayout.JAVA_SHORT.withName("procs").withByteAlignment(8),
             MemoryLayout.paddingLayout(48),
-            ValueLayout.JAVA_LONG.withName("totalhigh").withBitAlignment(64),
+            ValueLayout.JAVA_LONG.withName("totalhigh").withByteAlignment(8),
             ValueLayout.JAVA_LONG.withName("freehigh"),
             ValueLayout.JAVA_INT.withName("mem_unit"),
             MemoryLayout.paddingLayout(32).withName("_f")
