@@ -63,8 +63,8 @@ public class Helper {
     // If so, then it is ok to be a critical section, 
     // with region pinning permitting GC during such sessions.
     // Source: https://bugs.openjdk.org/browse/JDK-8312523
-    private static final Linker.Option[] TRIVIAL = {Linker.Option.critical(true)};
-    private static final Linker.Option[] NOT_TRIVIAL = {Linker.Option.critical(false)};
+    private static final Linker.Option[] TRIVIAL = {Linker.Option.critical(false)};
+    private static final Linker.Option[] NOT_TRIVIAL = {Linker.Option.critical(true)};
 
     static MethodHandle downcallHandle(String name, FunctionDescriptor fd, boolean trivial) {
         MemorySegment address = SymbolLookup.loaderLookup()
