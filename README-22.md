@@ -9,4 +9,8 @@
 export JAVA_HOME=$HOME/dev/jdk22
 ./run.sh > run.out.txt 2>&1
 ```
+Then
 
+```
+tail -f run.out.txt | sed -n '/Result/N;/Result/p' 
+```
