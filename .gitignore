@@ -2,3 +2,7 @@
 target/
 cmake-build-*/
 logs/
+/.classpath
+/.settings
+.project
+*.out.*
