@@ -2,6 +2,20 @@
 
 set -e
 
+if ! [ -d "$JAVA_HOME" ] ; then
+  echo "## $0: Set JAVA_HOME to JDK 22" 1>&2
+  exit 2
+fi
+export PATH="$JAVA_HOME/bin:$PATH"
+javaVersion="$(java --version)"
+javaVersionNum="$(echo "$javaVersion" | sed -n '1s|.* \([^ ][^ ]*\) .*|\1|p')"
+if ! [ "22" == "${javaVersionNum}" ] ; then
+  echo "## $0: Unable to verify java 22." 
+  echo " # got: $javaVersionNum"
+  echo " # from: $javaVersion"
+  exit 3
+fi 1>&2
+
 cd "$(dirname $0)"
 BENCHMARK_DIR="$(pwd)"
 
